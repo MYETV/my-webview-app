@@ -2108,7 +2108,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Verifica permesso camera
+        // Verify camera permission
         if (hasPermission(Manifest.permission.CAMERA)) {
             Log.d(TAG, "Camera permission not granted, requesting...");
             Toast.makeText(this, "Camera permission required", Toast.LENGTH_SHORT).show();
@@ -2119,7 +2119,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Camera permission granted, launching scanner");
 
         try {
-            // Configura le opzioni dello scanner
+            // Configure the scanner
             ScanOptions options = new ScanOptions();
             options.setDesiredBarcodeFormats(ScanOptions.QR_CODE);
             options.setPrompt("Scan a QR code");
@@ -2128,7 +2128,7 @@ public class MainActivity extends AppCompatActivity {
             options.setBarcodeImageEnabled(false);
             options.setOrientationLocked(false);
 
-            // Lancia lo scanner
+            // Launch the scanner
             qrScannerLauncher.launch(options);
             Log.d(TAG, "QR Scanner launched");
 
@@ -2830,6 +2830,27 @@ public class MainActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         Log.e(TAG, "Exception in openFormInSecondaryWebView: " + e.getMessage());
                         e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+        @android.webkit.JavascriptInterface
+        public void setKeepScreenOn(boolean keepOn) {
+            Log.d(TAG, "setKeepScreenOn called from JS: " + keepOn);
+
+            // Execute on Main Thread (UI Thread)
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (keepOn) {
+                        // screen not blocking
+                        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                        Log.d(TAG, "Screen lock ENABLED");
+                    } else {
+                        // screen will block
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                        Log.d(TAG, "Screen lock DISABLED");
                     }
                 }
             });
