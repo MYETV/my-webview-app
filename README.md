@@ -1251,7 +1251,9 @@ If you encounter any issues or have questions:
 
 ---
 
-## Demo & app already published on google store
+## Demo
+
+Demo & app already published on google store
 
 Install the released app of MYETV on your device here: [https://play.google.com/store/apps/details?id=com.myetv.tv.mobile](https://play.google.com/store/apps/details?id=com.myetv.tv.mobile)
 
