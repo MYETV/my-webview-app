@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk 36
+    compileSdk 37
     namespace "com.my.webviewapplication.mobile"
     
     defaultConfig {
         applicationId 'com.my.webviewapplication.mobile'
         minSdk 23
-        targetSdk 36
+        targetSdk 37
         versionCode 100
         versionName "1.0.0"
         multiDexEnabled true
@@ -46,15 +46,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     
     // AndroidX Core
-    implementation 'androidx.core:core:1.17.0'
-    implementation 'androidx.activity:activity:1.11.0'
+    implementation 'androidx.core:core:1.18.0'
+    implementation 'androidx.activity:activity:1.13.0'
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
-    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
+    implementation 'com.google.android.material:material:1.14.0'
 
     // Firebase
-    implementation platform('com.google.firebase:firebase-bom:34.6.0')
+    implementation platform('com.google.firebase:firebase-bom:34.13.0')
     implementation 'com.google.firebase:firebase-analytics' // Firebase Analytics
     implementation 'com.google.firebase:firebase-messaging' // Firebase Push Messaging
     implementation 'com.google.firebase:firebase-inappmessaging-display' // Firebase In-App Messaging
@@ -63,23 +63,23 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     
     // WebView & Browser
-    implementation 'androidx.browser:browser:1.9.0'
+    implementation 'androidx.browser:browser:1.10.0'
     
     // Splash Screen
     implementation 'androidx.core:core-splashscreen:1.2.0'
     
     // GIF Support
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.29'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.31'
     
     // Network & Connectivity
-    implementation 'androidx.work:work-runtime:2.11.0'
+    implementation 'androidx.work:work-runtime:2.11.2'
     
     // Lifecycle
-    implementation 'androidx.lifecycle:lifecycle-process:2.9.4'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.4'
+    implementation 'androidx.lifecycle:lifecycle-process:2.10.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.10.0'
     
     // Gson
-    implementation 'com.google.code.gson:gson:2.13.2'
+    implementation 'com.google.code.gson:gson:2.14.0'
     
     // MultiDex
     implementation 'androidx.multidex:multidex:2.0.1'
