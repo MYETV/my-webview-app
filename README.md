@@ -31,7 +31,7 @@ A powerful and feature-rich Android WebView application with 20+ built-in langua
 - [Advanced Features](#-advanced-features)
 - [Troubleshooting](#-troubleshooting)
 - [License](#-license)
-- [Demo & app already published on google store](#-demo)
+- [Demo & app already published on google store](#demo)
 
 ---
 
