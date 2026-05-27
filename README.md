@@ -31,6 +31,7 @@ A powerful and feature-rich Android WebView application with 20+ built-in langua
 - [Advanced Features](#-advanced-features)
 - [Troubleshooting](#-troubleshooting)
 - [License](#-license)
+- [Demo & app already published on google store](#-demo)
 
 ---
 
@@ -1250,6 +1251,11 @@ If you encounter any issues or have questions:
 
 ---
 
+## Demo & app already published on google store
+
+Install the released app of MYETV on your device here: [https://play.google.com/store/apps/details?id=com.myetv.tv.mobile](https://play.google.com/store/apps/details?id=com.myetv.tv.mobile)
+
+---
 <div align="center">
 
 **Made with ❤️ for the Android community**
