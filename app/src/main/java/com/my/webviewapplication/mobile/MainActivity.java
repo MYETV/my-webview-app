@@ -209,6 +209,9 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         Log.d(TAG, "onPause: App going to background");
 
+        // Force cookies sync from RAM to persistent storage before app goes to background
+        CookieManager.getInstance().flush();
+
         // Disable DND mode when app goes to background
         if (isDndModeActive) {
             Log.d(TAG, "onPause: Disabling DND mode");
@@ -819,9 +822,12 @@ public class MainActivity extends AppCompatActivity {
         settings.setDatabaseEnabled(true);
 
         // === COOKIES MANAGEMENT ===
+        // Get CookieManager instance and explicitly enable standard cookies
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+
         if (isMain && Config.CLEAR_COOKIES_ON_START) {
             Log.d(TAG, "Clearing cookies on start");
-            CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.removeAllCookies(null);
             cookieManager.flush();
         }
@@ -1503,6 +1509,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+
+            // Force flush after page loads to ensure session and banner cookies are saved immediately
+            CookieManager.getInstance().flush();
 
             if (isMainWebView) {
                 // Mark WebView as loaded - this will trigger splash screen dismissal if waiting
