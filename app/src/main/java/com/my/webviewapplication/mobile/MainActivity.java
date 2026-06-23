@@ -71,7 +71,7 @@ interface HTTPSWarningCallback {
 }
 
 public class MainActivity extends AppCompatActivity {
-    
+
     private static final String TAG = "MainActivity";
     private static final int PERMISSION_REQUEST_CODE = 100;
     private static final int NOTIFICATION_PERMISSION_CODE = 101;
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout webViewContainer;
     private FrameLayout secondaryWebViewContainer;
     private View offlineView;
-    
+
     private boolean isOffline = false;
     private String fcmToken = "";
     private Handler networkCheckHandler;
@@ -776,6 +776,20 @@ public class MainActivity extends AppCompatActivity {
     private void setupWebView(WebView webView, boolean isMain) {
         WebSettings settings = webView.getSettings();
 
+        // --- GESTIONE DINAMICA DEL COLORE DI SFONDO ---
+        // Se l'opzione è attiva, usa il tema corrente per decidere lo sfondo
+        if (Config.ENHANCE_URL_WITH_THEME) {
+            if ("dark".equals(getCurrentTheme())) {
+                webView.setBackgroundColor(android.graphics.Color.parseColor("#000000")); // Sfondo nero
+            } else {
+                webView.setBackgroundColor(android.graphics.Color.parseColor("#FFFFFF")); // Sfondo bianco
+            }
+        } else {
+            // Se l'opzione è disattivata, usa trasparente
+            webView.setBackgroundColor(android.graphics.Color.TRANSPARENT);
+        }
+        // ----------------------------------------------
+
         // Basic settings
         settings.setJavaScriptEnabled(Config.ENABLE_JAVASCRIPT);
         settings.setDomStorageEnabled(Config.ENABLE_DOM_STORAGE);
@@ -1268,7 +1282,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupOrientation() {
         String orientation = isTablet() ? Config.TABLET_ORIENTATION : Config.PHONE_ORIENTATION;
-        
+
         switch (orientation.toLowerCase()) {
             case "portrait":
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -1285,11 +1299,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-    
+
     private boolean isTablet() {
-        return (getResources().getConfiguration().screenLayout 
-            & android.content.res.Configuration.SCREENLAYOUT_SIZE_MASK) 
-            >= android.content.res.Configuration.SCREENLAYOUT_SIZE_LARGE;
+        return (getResources().getConfiguration().screenLayout
+                & android.content.res.Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= android.content.res.Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
     /**
@@ -1325,20 +1339,20 @@ public class MainActivity extends AppCompatActivity {
     private boolean hasPermission(String permission) {
         return ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED;
     }
-    
+
     private void requestPermission(String permission, int requestCode) {
         ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
     }
-    
+
     private void initializeFirebase() {
         if (Config.ENABLE_FIREBASE_PUSH) {
             FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && task.getResult() != null) {
-                        fcmToken = task.getResult();
-                        Log.d(TAG, "FCM Token: " + fcmToken);
-                    }
-                });
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            fcmToken = task.getResult();
+                            Log.d(TAG, "FCM Token: " + fcmToken);
+                        }
+                    });
         }
     }
 
