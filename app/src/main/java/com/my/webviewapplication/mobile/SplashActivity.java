@@ -1,10 +1,14 @@
 package com.my.webviewapplication.mobile;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,10 +48,52 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        // Get the GifImageView for splash animation
+        // 1. Set the dynamic background color from Config.java
+        View rootLayout = findViewById(R.id.splash_root_layout);
+        if (rootLayout != null) {
+            try {
+                rootLayout.setBackgroundColor(Color.parseColor(Config.SPLASH_BG_COLOR));
+            } catch (IllegalArgumentException e) {
+                // Fallback to white if the hex color is malformed
+                Log.e(TAG, "Invalid color format in Config.SPLASH_BG_COLOR", e);
+                rootLayout.setBackgroundColor(Color.WHITE);
+            }
+        }
+
+        // 2. Handle the media type (GIF vs Video)
         GifImageView gifImageView = findViewById(R.id.splash_gif);
-        if (gifImageView != null) {
-            Log.d(TAG, "onCreate: Splash GIF loaded");
+        VideoView videoView = findViewById(R.id.splash_video);
+
+        if ("video".equalsIgnoreCase(Config.SPLASH_MEDIA_TYPE)) {
+            // Setup and play video
+            if (gifImageView != null) {
+                gifImageView.setVisibility(View.GONE);
+            }
+            if (videoView != null) {
+                videoView.setVisibility(View.VISIBLE);
+
+                // Build the URI for the raw resource
+                String videoPath = "android.resource://" + getPackageName() + "/raw/" + Config.SPLASH_VIDEO_NAME;
+                videoView.setVideoURI(Uri.parse(videoPath));
+
+                // Configure video playback behavior based on loop configuration
+                videoView.setOnPreparedListener(mp -> {
+                    mp.setLooping(Config.SPLASH_VIDEO_LOOP);
+                    Log.d(TAG, "onPrepared: Video looping set to " + Config.SPLASH_VIDEO_LOOP);
+                });
+
+                videoView.start();
+                Log.d(TAG, "onCreate: Splash Video started");
+            }
+        } else {
+            // Setup and play GIF
+            if (videoView != null) {
+                videoView.setVisibility(View.GONE);
+            }
+            if (gifImageView != null) {
+                gifImageView.setVisibility(View.VISIBLE);
+                Log.d(TAG, "onCreate: Splash GIF loaded");
+            }
         }
 
         // Check if we should wait for WebView to load
