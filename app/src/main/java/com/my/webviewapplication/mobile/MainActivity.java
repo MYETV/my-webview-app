@@ -776,20 +776,6 @@ public class MainActivity extends AppCompatActivity {
     private void setupWebView(WebView webView, boolean isMain) {
         WebSettings settings = webView.getSettings();
 
-        // --- GESTIONE DINAMICA DEL COLORE DI SFONDO ---
-        // Se l'opzione è attiva, usa il tema corrente per decidere lo sfondo
-        if (Config.ENHANCE_URL_WITH_THEME) {
-            if ("dark".equals(getCurrentTheme())) {
-                webView.setBackgroundColor(android.graphics.Color.parseColor("#000000")); // Sfondo nero
-            } else {
-                webView.setBackgroundColor(android.graphics.Color.parseColor("#FFFFFF")); // Sfondo bianco
-            }
-        } else {
-            // Se l'opzione è disattivata, usa trasparente
-            webView.setBackgroundColor(android.graphics.Color.TRANSPARENT);
-        }
-        // ----------------------------------------------
-
         // Basic settings
         settings.setJavaScriptEnabled(Config.ENABLE_JAVASCRIPT);
         settings.setDomStorageEnabled(Config.ENABLE_DOM_STORAGE);
