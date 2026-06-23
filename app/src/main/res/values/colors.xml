@@ -1,14 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#DAA520</color>
     <color name="colorPrimaryDark">#B8860B</color>
     <color name="colorAccent">#FAFAD2</color>
     
-    <!-- Offline View Colors -->
     <color name="offline_background">#FFFFFF</color>
     <color name="offline_text">#000000</color>
     
-    <!-- Secondary Browser Colors -->
-    <color name="secondary_browser_bg">#DAA520</color>        <!-- Goldenrod -->
-    <color name="secondary_browser_button">#B8860B</color>    <!-- Dark Goldenrod -->
-    <color name="secondary_browser_text">#FFFFFF</color>      <!-- White -->
+    <color name="secondary_browser_bg">#DAA520</color>
+    <color name="secondary_browser_button">#B8860B</color>
+    <color name="secondary_browser_text">#FFFFFF</color>
+    <color name="splash_system_bg">#FFFFFF</color>
 </resources>
