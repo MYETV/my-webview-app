@@ -2,22 +2,34 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/splash_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <!-- GIF ImageView using droidsonroids library -->
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/splash_gif"
+    <FrameLayout
+        android:id="@+id/media_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/splash_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!-- Optional: Add your logo or text below -->
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/splash_gif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/splash_logo"
+            android:visibility="gone" />
+
+        <VideoView
+            android:id="@+id/splash_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </FrameLayout>
+
     <TextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
@@ -27,7 +39,7 @@
         android:textColor="#DAA520"
         android:textStyle="bold"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/splash_gif"
+        app:layout_constraintTop_toBottomOf="@id/media_container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
