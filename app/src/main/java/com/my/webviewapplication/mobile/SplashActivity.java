@@ -52,11 +52,9 @@ public class SplashActivity extends AppCompatActivity {
         View rootLayout = findViewById(R.id.splash_root_layout);
         if (rootLayout != null) {
             try {
-                rootLayout.setBackgroundColor(Color.parseColor(Config.SPLASH_BG_COLOR));
+                getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.parseColor(Config.SPLASH_BG_COLOR)));
             } catch (IllegalArgumentException e) {
-                // Fallback to white if the hex color is malformed
                 Log.e(TAG, "Invalid color format in Config.SPLASH_BG_COLOR", e);
-                rootLayout.setBackgroundColor(Color.WHITE);
             }
         }
 
@@ -71,6 +69,7 @@ public class SplashActivity extends AppCompatActivity {
             }
             if (videoView != null) {
                 videoView.setVisibility(View.VISIBLE);
+                videoView.setZOrderMediaOverlay(true);
 
                 // Build the URI for the raw resource
                 String videoPath = "android.resource://" + getPackageName() + "/raw/" + Config.SPLASH_VIDEO_NAME;
