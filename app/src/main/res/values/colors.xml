@@ -3,12 +3,12 @@
     <color name="colorPrimary">#DAA520</color>
     <color name="colorPrimaryDark">#B8860B</color>
     <color name="colorAccent">#FAFAD2</color>
-    
+
     <color name="offline_background">#FFFFFF</color>
     <color name="offline_text">#000000</color>
-    
+
     <color name="secondary_browser_bg">#DAA520</color>
     <color name="secondary_browser_button">#B8860B</color>
     <color name="secondary_browser_text">#FFFFFF</color>
-    <color name="splash_system_bg">#FFFFFF</color>
+    <color name="splash_system_bg">#000000</color>
 </resources>
