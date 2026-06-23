@@ -80,21 +80,44 @@ public class SplashActivity extends AppCompatActivity {
                 // Keep the video overlay on top of the layout background
                 videoView.setZOrderMediaOverlay(true);
 
-                String videoPath = "android.resource://" + getPackageName() + "/raw/" + Config.SPLASH_VIDEO_NAME;
-                videoView.setVideoURI(android.net.Uri.parse(videoPath));
-                videoView.setOnPreparedListener(mp -> mp.setLooping(Config.SPLASH_VIDEO_LOOP));
-                videoView.start();
-                Log.d(TAG, "onCreate: Splash Video started");
+                // Dynamically fetch the integer Resource ID instead of using string paths to prevent ProGuard/R8 stripping
+                int videoResId = getResources().getIdentifier(Config.SPLASH_VIDEO_NAME, "raw", getPackageName());
+
+                if (videoResId != 0) {
+                    // Build a secure URI using the resolved resource ID
+                    String videoPath = "android.resource://" + getPackageName() + "/" + videoResId;
+                    videoView.setVideoURI(android.net.Uri.parse(videoPath));
+
+                    videoView.setOnPreparedListener(mp -> {
+                        mp.setLooping(Config.SPLASH_VIDEO_LOOP);
+                        Log.d(TAG, "onPrepared: Video ready to play");
+                    });
+
+                    videoView.start();
+                    Log.d(TAG, "onCreate: Splash Video started successfully");
+                } else {
+                    // Fallback behavior if the video file was stripped by the compiler or doesn't exist
+                    Log.e(TAG, "onCreate: CRITICAL ERROR - Video resource not found: " + Config.SPLASH_VIDEO_NAME);
+
+                    // Skip the splash screen timeout and go directly to MainActivity to avoid getting stuck
+                    goToMainActivity();
+                    return;
+                }
             }
         } else {
             if (videoView != null) videoView.setVisibility(View.GONE);
             if (gifImageView != null) {
                 gifImageView.setVisibility(View.VISIBLE);
+
+                // Dynamically fetch the drawable resource ID using the string from Config.java
                 int gifResId = getResources().getIdentifier(Config.SPLASH_GIF_NAME, "drawable", getPackageName());
+
                 if (gifResId != 0) {
                     gifImageView.setImageResource(gifResId);
+                    Log.d(TAG, "onCreate: Splash GIF loaded");
+                } else {
+                    Log.e(TAG, "onCreate: GIF resource not found: " + Config.SPLASH_GIF_NAME);
                 }
-                Log.d(TAG, "onCreate: Splash GIF loaded");
             }
         }
 
