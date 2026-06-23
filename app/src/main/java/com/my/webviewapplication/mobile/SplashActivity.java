@@ -48,11 +48,21 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        // 1. Set the dynamic background color from Config.java
+        // Force the status bar to use the specific color defined in Config.java
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            try {
+                getWindow().setStatusBarColor(android.graphics.Color.parseColor(Config.STATUS_BAR_COLOR));
+            } catch (Exception e) {
+                Log.e(TAG, "Invalid color format in Config.STATUS_BAR_COLOR", e);
+            }
+        }
+
+        // 1. Force the layout to read the background color from Config.java
         View rootLayout = findViewById(R.id.splash_root_layout);
         if (rootLayout != null) {
             try {
-                getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.parseColor(Config.SPLASH_BG_COLOR)));
+                rootLayout.setBackgroundColor(android.graphics.Color.parseColor(Config.SPLASH_BG_COLOR));
             } catch (IllegalArgumentException e) {
                 Log.e(TAG, "Invalid color format in Config.SPLASH_BG_COLOR", e);
             }
@@ -63,45 +73,28 @@ public class SplashActivity extends AppCompatActivity {
         VideoView videoView = findViewById(R.id.splash_video);
 
         if ("video".equalsIgnoreCase(Config.SPLASH_MEDIA_TYPE)) {
-            // Setup and play video
-            if (gifImageView != null) {
-                gifImageView.setVisibility(View.GONE);
-            }
+            if (gifImageView != null) gifImageView.setVisibility(View.GONE);
             if (videoView != null) {
                 videoView.setVisibility(View.VISIBLE);
+
+                // Keep the video overlay on top of the layout background
                 videoView.setZOrderMediaOverlay(true);
 
-                // Build the URI for the raw resource
                 String videoPath = "android.resource://" + getPackageName() + "/raw/" + Config.SPLASH_VIDEO_NAME;
-                videoView.setVideoURI(Uri.parse(videoPath));
-
-                // Configure video playback behavior based on loop configuration
-                videoView.setOnPreparedListener(mp -> {
-                    mp.setLooping(Config.SPLASH_VIDEO_LOOP);
-                    Log.d(TAG, "onPrepared: Video looping set to " + Config.SPLASH_VIDEO_LOOP);
-                });
-
+                videoView.setVideoURI(android.net.Uri.parse(videoPath));
+                videoView.setOnPreparedListener(mp -> mp.setLooping(Config.SPLASH_VIDEO_LOOP));
                 videoView.start();
                 Log.d(TAG, "onCreate: Splash Video started");
             }
         } else {
-            // Setup and play GIF
-            if (videoView != null) {
-                videoView.setVisibility(View.GONE);
-            }
+            if (videoView != null) videoView.setVisibility(View.GONE);
             if (gifImageView != null) {
                 gifImageView.setVisibility(View.VISIBLE);
-
-                // Dynamically fetch the drawable resource ID using the string from Config.java
                 int gifResId = getResources().getIdentifier(Config.SPLASH_GIF_NAME, "drawable", getPackageName());
-
-                // Check if the resource exists before setting it to avoid crashes
                 if (gifResId != 0) {
                     gifImageView.setImageResource(gifResId);
-                    Log.d(TAG, "onCreate: Splash GIF loaded successfully");
-                } else {
-                    Log.e(TAG, "onCreate: GIF resource not found: " + Config.SPLASH_GIF_NAME);
                 }
+                Log.d(TAG, "onCreate: Splash GIF loaded");
             }
         }
 
