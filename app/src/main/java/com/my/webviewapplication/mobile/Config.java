@@ -98,6 +98,10 @@ public class Config {
     // e.g., "intro_video" for res/raw/intro_video.mp4
     public static final String SPLASH_VIDEO_NAME = "intro_video";
 
+    // GIF filename without extension (must be placed in res/drawable folder)
+    // e.g., "splash_logo" for res/drawable/splash_logo.gif
+    public static final String SPLASH_GIF_NAME = "splash_logo";
+
     // If true, the video will repeat continuously. If false, it will pause on the last frame.
     public static final boolean SPLASH_VIDEO_LOOP = false;
 
