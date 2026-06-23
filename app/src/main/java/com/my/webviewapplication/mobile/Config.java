@@ -83,13 +83,26 @@ public class Config {
     // Secondary Browser Corner Radius for Button (in dp)
     public static final int SECONDARY_BROWSER_BUTTON_CORNER_RADIUS = 4;
 
-    // ============================================
+// ============================================
     // SPLASH SCREEN CONFIGURATION
     // ============================================
-    
+
     public static final boolean ENABLE_SPLASH_SCREEN = true;
     public static final int SPLASH_TIMEOUT_MS = 3000; // 3 seconds
     public static final boolean SPLASH_WAIT_FOR_WEBVIEW = false; // Wait until WebView loads
+
+    // Options: "gif" or "video"
+    public static final String SPLASH_MEDIA_TYPE = "video";
+
+    // Video filename without extension (must be placed in res/raw folder)
+    // e.g., "intro_video" for res/raw/intro_video.mp4
+    public static final String SPLASH_VIDEO_NAME = "intro_video";
+
+    // If true, the video will repeat continuously. If false, it will pause on the last frame.
+    public static final boolean SPLASH_VIDEO_LOOP = false;
+
+    // Splash screen background color (Hex format: #RRGGBB)
+    public static final String SPLASH_BG_COLOR = "#000000";
     
     // ============================================
     // WEBVIEW CONFIGURATION
