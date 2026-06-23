@@ -92,7 +92,17 @@ public class SplashActivity extends AppCompatActivity {
             }
             if (gifImageView != null) {
                 gifImageView.setVisibility(View.VISIBLE);
-                Log.d(TAG, "onCreate: Splash GIF loaded");
+
+                // Dynamically fetch the drawable resource ID using the string from Config.java
+                int gifResId = getResources().getIdentifier(Config.SPLASH_GIF_NAME, "drawable", getPackageName());
+
+                // Check if the resource exists before setting it to avoid crashes
+                if (gifResId != 0) {
+                    gifImageView.setImageResource(gifResId);
+                    Log.d(TAG, "onCreate: Splash GIF loaded successfully");
+                } else {
+                    Log.e(TAG, "onCreate: GIF resource not found: " + Config.SPLASH_GIF_NAME);
+                }
             }
         }
 
